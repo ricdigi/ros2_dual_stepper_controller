@@ -1,0 +1,47 @@
+# === PlatformIO ===
+.pio/
+.pioenvs/
+.piodebug/
+platformio.ini.bak
+**/.vscode/
+**/.pio/
+
+# PlatformIO build artifacts
+**/.pio/build/
+**/.pio/libdeps/
+**/.pio/lib/
+**/.pio/test/
+**/.pio/*/*.elf
+**/.pio/*/*.bin
+**/.pio/*/*.hex
+**/.pio/*/*.map
+**/.pio/*/*.exe
+
+# PlatformIO Python environment
+.pythonenv/
+
+# Unit test output
+test/.output/
+
+# === CLion / JetBrains IDEs ===
+.idea/
+cmake-build-*/
+.clion/
+
+# === General build artifacts ===
+build/
+install/
+log/
+*.o
+*.obj
+*.so
+*.a
+*.swp
+*.swo
+*.log
+*.tmp
+*.bak
+
+# === OS files ===
+.DS_Store
+Thumbs.db
