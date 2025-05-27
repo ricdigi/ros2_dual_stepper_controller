@@ -30,7 +30,7 @@ void setup() {
   Wire.begin();
 
   stepper_A.setUpEnablePin();
-  stepper_A.setUpEnablePin();
+  stepper_B.setUpEnablePin();
 
   stepper_A.setSpeedRad(0);
   stepper_B.setSpeedRad(0);

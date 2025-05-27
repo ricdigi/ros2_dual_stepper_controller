@@ -59,7 +59,6 @@ class SerialComm {
     static const uint8_t VEL_DATA_LEN = 8;
     static const uint8_t ENC_DATA_LEN = 8;
 
-
     uint8_t cmd;
     uint8_t len;
     uint8_t data[VEL_DATA_LEN];
