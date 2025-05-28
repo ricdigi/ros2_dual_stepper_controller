@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xacro:macro name="base_link" >
+
+    <link name="base_link">
+
+        <visual>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://ros2_dual_stepper_controller/description/meshes/urdf_base_link.stl"
+                      scale="1 1 1"/>
+            </geometry>
+            <material name="dark_grey"/>
+        </visual>
+
+        <!-- Inertial is formally required by ros2_control but not functionally necessary for this simple example-->
+        <inertial>
+            <mass value="0.1"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+        </inertial>
+    </link>
+
+</xacro:macro>
