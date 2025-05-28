@@ -21,15 +21,17 @@ void SerialComm::setBaudRate(int baud_rate) {
 
 hardware_interface::CallbackReturn SerialComm::init() {
 
+    logger_ = std::make_shared<rclcpp::Logger>(rclcpp::get_logger("serial_comm"));
+
     serial_fd_ = open(serial_port_.c_str(), O_RDWR | O_NOCTTY | O_SYNC);
     if (serial_fd_ < 0) {
-        RCLCPP_ERROR_STREAM(rclcpp::get_logger("Hardware"), "Failed to open serial port: " << strerror(errno));
+        RCLCPP_ERROR(get_logger(), "Failed to open serial port: " << strerror(errno));
         return hardware_interface::CallbackReturn::ERROR;
     }
 
     struct termios tty {};
     if (tcgetattr(serial_fd_, &tty) != 0) {
-        RCLCPP_ERROR_STREAM(rclcpp::get_logger("Hardware"), "tcgetattr failed: " << strerror(errno));
+        RCLCPP_ERROR(get_logger(), "tcgetattr failed: " << strerror(errno));
         return hardware_interface::CallbackReturn::ERROR;
     }
 
@@ -41,7 +43,7 @@ hardware_interface::CallbackReturn SerialComm::init() {
     else if (baud_rate_ == 57600) baud = B57600;
     else if (baud_rate_ == 115200) baud = B115200;
     else {
-        RCLCPP_ERROR_STREAM(rclcpp::get_logger("Hardware"), "Unsupported baud rate");
+        RCLCPP_ERROR(get_logger(), "Unsupported baud rate");
         return hardware_interface::CallbackReturn::ERROR;
     }
 
@@ -61,7 +63,7 @@ hardware_interface::CallbackReturn SerialComm::init() {
     tty.c_cflag &= ~CRTSCTS;
 
     if (tcsetattr(serial_fd_, TCSANOW, &tty) != 0) {
-        RCLCPP_ERROR_STREAM(rclcpp::get_logger("Hardware"), "tcsetattr failed: " << strerror(errno));
+        RCLCPP_ERROR(get_logger(), "tcsetattr failed: " << strerror(errno));
         return hardware_interface::CallbackReturn::ERROR;
     }
 
