@@ -1,7 +1,7 @@
 
-#include "ros2_dual_stepper_controller/dual_stepper_hardware_interface.hpp"
-#include "ros2_dual_stepper_controller/serial_comm.h"
-#include "ros2_dual_stepper_controller/wheel_joint.hpp"
+#include "../include/ros2_dual_stepper_controller/dual_stepper_hardware_interface.hpp"
+#include "../include/ros2_dual_stepper_controller/serial_comm.h"
+#include "../include/ros2_dual_stepper_controller/wheel_joint.hpp"
 
 #include <chrono>
 #include <cmath>

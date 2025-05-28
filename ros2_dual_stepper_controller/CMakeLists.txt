@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.8)
 project(ros2_dual_stepper_controller LANGUAGES CXX)
 
 find_package(ament_cmake REQUIRED)
-find_package(backward_ros REQUIRED)
-find_package(controller_manager REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
         hardware_interface
