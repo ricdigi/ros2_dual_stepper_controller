@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://ros.org/wiki/xacro" name="dual_stepper">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="dual_stepper">
 
     <!-- Include all macro definitions -->
-    <xacro:include filename="$(find ros2_dual_stepper_controller)/description/urdf/robot_parts/base_link.xacro"/>
-    <xacro:include filename="$(find ros2_dual_stepper_controller)/description/urdf/robot_parts/wheel.xacro"/>
-    <xacro:include filename="$(find ros2_dual_stepper_controller)/description/urdf/dual_stepper.ros2_control.xacro"/>
+    <xacro:include filename="robot_parts/base_link.xacro"/>
+    <xacro:include filename="robot_parts/wheel.xacro"/>
+    <xacro:include filename="dual_stepper.ros2_control.xacro"/>
 
     <!-- Define reusable materials -->
     <material name="grey">
@@ -19,11 +19,11 @@
     <!-- Robot structure -->
     <xacro:base_link/>
 
-    <xacro:wheel name="left_wheel" parent="base_link"
+    <xacro:wheel wheel_name="left_wheel" parent="base_link"
             xyz="-0.1156 0.0 0.046" rpy="0 0 0" axis="0 1 0"/>
 
-    <xacro:wheel name="right_wheel" parent="base_link"
-            xyz="0.1156 -0.0 0.04698" rpy="0 ${pi} 0" axis="0 1 0"/>
+    <xacro:wheel wheel_name="right_wheel" parent="base_link"
+            xyz="0.1156 0.0 0.046" rpy="0 ${pi} 0" axis="0 1 0"/>
 
     <xacro:ros2_dual_stepper_controller name="DualStepperSystem" />
 

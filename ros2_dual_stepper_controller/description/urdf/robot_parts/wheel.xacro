@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-<xacro:macro name="wheel" params="name parent xyz rpy axis" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:macro name="wheel" params="wheel_name parent xyz rpy axis" xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <link name="${name}">
+    <link name="${wheel_name}">
 
         <visual>
             <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
@@ -20,11 +21,12 @@
         </inertial>
     </link>
 
-    <joint name="${name}_joint" type="continuous">
+    <joint name="${wheel_name}_joint" type="continuous">
         <parent link="${parent}"/>
-        <child link="${name}"/>
+        <child link="${wheel_name}"/>
         <origin xyz="${xyz}" rpy="${rpy}"/>
         <axis xyz="${axis}"/>
     </joint>
 
 </xacro:macro>
+</robot>
