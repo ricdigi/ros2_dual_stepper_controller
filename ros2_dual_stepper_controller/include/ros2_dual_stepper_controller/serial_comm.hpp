@@ -3,7 +3,10 @@
 #define SERIAL_COMM_HPP
 
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
+#include "hardware_interface/system_interface.hpp"
+
 #include <string>
+#include <vector>
 
 class SerialComm {
 

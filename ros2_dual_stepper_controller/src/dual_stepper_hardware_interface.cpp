@@ -20,7 +20,7 @@
 namespace dual_stepper_hardware_interface
 {
 
-hardware_interface::CallbackReturn dual_stepper_hardware_interface::on_init(const hardware_interface::HardwareInfo & info) {
+hardware_interface::CallbackReturn DualStepperHardwareInterface::on_init(const hardware_interface::HardwareInfo & info) {
 
     // Call the parent class default on_init() method
     if (hardware_interface::SystemInterface::on_init(info) != hardware_interface::CallbackReturn::SUCCESS) {
@@ -47,7 +47,7 @@ hardware_interface::CallbackReturn dual_stepper_hardware_interface::on_init(cons
 }
 
 
-hardware_interface::CallbackReturn dual_stepper_hardware_interface::on_configure(const rclcpp_lifecycle::State & /*previous_state*/) {
+hardware_interface::CallbackReturn DualStepperHardwareInterface::on_configure(const rclcpp_lifecycle::State & /*previous_state*/) {
 
     // Configure and initialize the serial port and baud rate from the hardware parameters
     serial_comm_ = SerialComm();
@@ -67,7 +67,7 @@ hardware_interface::CallbackReturn dual_stepper_hardware_interface::on_configure
 }
 
 
-std::vector<hardware_interface::StateInterface> dual_stepper_hardware_interface::export_state_interfaces() {
+std::vector<hardware_interface::StateInterface> DualStepperHardwareInterface::export_state_interfaces() {
   // We need to set up a position and a velocity interface for each wheel
   std::vector<hardware_interface::StateInterface> state_interfaces;
 
@@ -81,7 +81,7 @@ std::vector<hardware_interface::StateInterface> dual_stepper_hardware_interface:
 }
 
 
-std::vector<hardware_interface::CommandInterface> dual_stepper_hardware_interface::export_command_interfaces() {
+std::vector<hardware_interface::CommandInterface> DualStepperHardwareInterface::export_command_interfaces() {
   // We need to set up a velocity command interface for each wheel
   std::vector<hardware_interface::CommandInterface> command_interfaces;
 
@@ -92,7 +92,7 @@ std::vector<hardware_interface::CommandInterface> dual_stepper_hardware_interfac
 }
 
 
-hardware_interface::return_type dual_stepper_hardware_interface::read(
+hardware_interface::return_type DualStepperHardwareInterface::read(
     const rclcpp::Time & time, const rclcpp::Duration & period) {
 
     readEncoderData(period);
@@ -101,7 +101,7 @@ hardware_interface::return_type dual_stepper_hardware_interface::read(
 }
 
 
-hardware_interface::return_type dual_stepper_hardware_interface::write(
+hardware_interface::return_type DualStepperHardwareInterface::write(
     const rclcpp::Time & time, const rclcpp::Duration & period) {
 
     if (!sendVelocityCommand()) {
@@ -113,7 +113,7 @@ hardware_interface::return_type dual_stepper_hardware_interface::write(
 }
 
 
-void dual_stepper_hardware_interface::readEncoderData(const rclcpp::Duration & period) {
+void DualStepperHardwareInterface::readEncoderData(const rclcpp::Duration & period) {
     uint8_t cmd;
     std::vector<uint8_t> data;
 
@@ -133,7 +133,7 @@ void dual_stepper_hardware_interface::readEncoderData(const rclcpp::Duration & p
 }
 
 
-bool dual_stepper_hardware_interface::sendVelocityCommand() {
+bool DualStepperHardwareInterface::sendVelocityCommand() {
     std::vector<uint8_t> data(SerialComm::VEL_DATA_LEN);
     uint8_t cmd = SerialComm::VEL_CMD;
 
