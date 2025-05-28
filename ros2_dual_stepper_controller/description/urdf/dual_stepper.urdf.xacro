@@ -20,10 +20,10 @@
     <xacro:base_link/>
 
     <xacro:wheel wheel_name="left_wheel" parent="base_link"
-            xyz="-0.1156 0.0 0.046" rpy="0 0 0" axis="0 1 0"/>
+            xyz="-0.1156 0.0 0.046" rpy="0 0 0" axis="1 0 0"/>
 
     <xacro:wheel wheel_name="right_wheel" parent="base_link"
-            xyz="0.1156 0.0 0.046" rpy="0 ${pi} 0" axis="0 1 0"/>
+            xyz="0.1156 0.0 0.046" rpy="0 ${pi} 0" axis="1 0 0"/>
 
     <xacro:ros2_dual_stepper_controller name="DualStepperSystem" />
 
