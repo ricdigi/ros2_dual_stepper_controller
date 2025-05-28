@@ -133,3 +133,7 @@ bool dual_stepper_hardware_interface::sendVelocityCommand() {
 
 
 } // namespace dual_stepper_hardware_interface
+
+#include "pluginlib/class_list_macros.hpp"
+PLUGINLIB_EXPORT_CLASS(
+  ros2_dual_stepper_controller::DualStepperHardwareInterface, hardware_interface::SystemInterface)

@@ -3,11 +3,25 @@
 <package format="3">
   <name>ros2_dual_stepper_controller</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="ricdigi@todo.todo">ricdigi</maintainer>
-  <license>TODO: License declaration</license>
+  <description> hardware component plugin for a dual stepper motor actuator, designed for differential drive robots.
+    The hardware is repurposed from an ANET A8 3D printer. </description>
+
+  <maintainer email="riccardodigirolamo01@gmail.com">Riccardo Di Girolamo</maintainer>
+  <author email="riccardodigirolamo01@gmail.com">Riccardo Di Girolamo</author>
+  <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <build_depend>ros2_control_cmake</build_depend>
+
+  <depend>backward_ros</depend>
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>diff_drive_controller</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
