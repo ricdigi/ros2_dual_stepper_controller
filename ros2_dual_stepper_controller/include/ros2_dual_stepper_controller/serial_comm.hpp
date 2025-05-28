@@ -1,6 +1,6 @@
 
-#ifndef SERIAL_COMM_H
-#define SERIAL_COMM_H
+#ifndef SERIAL_COMM_HPP
+#define SERIAL_COMM_HPP
 
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include <string>

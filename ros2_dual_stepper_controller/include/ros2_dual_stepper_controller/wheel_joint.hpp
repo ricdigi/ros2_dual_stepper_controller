@@ -1,6 +1,6 @@
 
-#ifndef WHEEL_JOINT_H
-#define WHEEL_JOINT_H
+#ifndef WHEEL_JOINT_HPP
+#define WHEEL_JOINT_HPP
 
 #include <string>
 

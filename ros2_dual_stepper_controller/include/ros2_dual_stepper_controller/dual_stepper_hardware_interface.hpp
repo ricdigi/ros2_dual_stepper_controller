@@ -1,7 +1,7 @@
-#ifndef DUAL_STEPPER_HARDWARE_INTERFACE_H
-#define DUAL_STEPPER_HARDWARE_INTERFACE_H
+#ifndef DUAL_STEPPER_HARDWARE_INTERFACE_HPP
+#define DUAL_STEPPER_HARDWARE_INTERFACE_HPP
 
-#include "ros2_dual_stepper_controller/serial_comm.h"
+#include "ros2_dual_stepper_controller/serial_comm.hpp"
 #include "ros2_dual_stepper_controller/wheel_joint.hpp"
 
 #include <memory>
