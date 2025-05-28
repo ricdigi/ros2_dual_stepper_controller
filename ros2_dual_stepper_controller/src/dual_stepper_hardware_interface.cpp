@@ -10,6 +10,7 @@
 #include <limits>
 #include <memory>
 #include <sstream>
+#include <vector>
 
 #include "hardware_interface/lexical_casts.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
@@ -32,12 +33,15 @@ hardware_interface::CallbackReturn dual_stepper_hardware_interface::on_init(cons
      * ros2_control/hardware_interface/include/hardware_interface/component_parser.hpp.
      */
 
+    logger_ = std::make_shared<rclcpp::Logger>(rclcpp::get_logger("dual_stepper_hardware_interface"));
+    clock_ = std::make_shared<rclcpp::Clock>(rclcpp::Clock());
+
     if (info_.joints.size() != 2) {
-        RCLCPP_FATAL(get_logger(), "Expected exactly 2 joints, got %zu", info_.joints.size());
+        RCLCPP_FATAL(logger_, "Expected exactly 2 joints, got %zu", info_.joints.size());
         return hardware_interface::CallbackReturn::ERROR;
     }
 
-    RCLCPP_INFO(get_logger(), "Successfully initialized!");
+    RCLCPP_INFO(logger_, "Successfully initialized!");
     return hardware_interface::CallbackReturn::SUCCESS;
 
 }
@@ -57,13 +61,34 @@ hardware_interface::CallbackReturn dual_stepper_hardware_interface::on_configure
     left_wheel_.name = info_.joints[0].name;
     right_wheel_.name = info_.joints[1].name;
 
-
-    for (const auto & [name, descr] : joint_state_interfaces_) { set_state(name, 0.0); }
-    for (const auto & [name, descr] : joint_command_interfaces_) { set_command(name, 0.0); }
-
-    RCLCPP_INFO(get_logger(), "Successfully configured!");
+    RCLCPP_INFO(logger_, "Successfully configured!");
     return hardware_interface::CallbackReturn::SUCCESS;
 
+}
+
+
+std::vector<hardware_interface::StateInterface> dual_stepper_hardware_interface::export_state_interfaces() {
+  // We need to set up a position and a velocity interface for each wheel
+  std::vector<hardware_interface::StateInterface> state_interfaces;
+
+  state_interfaces.emplace_back(hardware_interface::StateInterface(left_wheel_.name, hardware_interface::HW_IF_POSITION, &left_wheel_.total_position_rad));
+  state_interfaces.emplace_back(hardware_interface::StateInterface(left_wheel_.name, hardware_interface::HW_IF_VELOCITY, &left_wheel_.velocity_rad_s));
+
+  state_interfaces.emplace_back(hardware_interface::StateInterface(right_wheel_.name, hardware_interface::HW_IF_POSITION, &right_wheel_.total_position_rad));
+  state_interfaces.emplace_back(hardware_interface::StateInterface(right_wheel_.name, hardware_interface::HW_IF_VELOCITY, &right_wheel_.velocity_rad_s));
+
+  return state_interfaces;
+}
+
+
+std::vector<hardware_interface::CommandInterface> dual_stepper_hardware_interface::export_command_interfaces() {
+  // We need to set up a velocity command interface for each wheel
+  std::vector<hardware_interface::CommandInterface> command_interfaces;
+
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(left_wheel_.name, hardware_interface::HW_IF_VELOCITY, &left_wheel_.commanded_velocity_rad_s));
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(right_wheel_.name, hardware_interface::HW_IF_VELOCITY, &right_wheel_.commanded_velocity_rad_s));
+
+  return command_interfaces;
 }
 
 
@@ -72,12 +97,6 @@ hardware_interface::return_type dual_stepper_hardware_interface::read(
 
     readEncoderData(period);
 
-    set_state("left_wheel/position", left_wheel_.total_position_rad);
-    set_state("left_wheel/velocity", left_wheel_.velocity_rad_s);
-
-    set_state("right_wheel/position", right_wheel_.total_position_rad);
-    set_state("right_wheel/velocity", right_wheel_.velocity_rad_s);
-
     return hardware_interface::return_type::OK;
 }
 
@@ -85,11 +104,8 @@ hardware_interface::return_type dual_stepper_hardware_interface::read(
 hardware_interface::return_type dual_stepper_hardware_interface::write(
     const rclcpp::Time & time, const rclcpp::Duration & period) {
 
-    left_wheel_.commanded_velocity_rad_s = get_command("left_wheel/velocity");
-    right_wheel_.commanded_velocity_rad_s = get_command("right_wheel/velocity");
-
     if (!sendVelocityCommand()) {
-        RCLCPP_ERROR(get_logger(), "Failed to send velocity command to the stepper motors.");
+        RCLCPP_ERROR(logger_, "Failed to send velocity command to the stepper motors.");
         return hardware_interface::return_type::ERROR;
     }
 
@@ -136,4 +152,4 @@ bool dual_stepper_hardware_interface::sendVelocityCommand() {
 
 #include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(
-  ros2_dual_stepper_controller::DualStepperHardwareInterface, hardware_interface::SystemInterface)
+  dual_stepper_hardware_interface::dual_stepper_hardware_interface, hardware_interface::SystemInterface)

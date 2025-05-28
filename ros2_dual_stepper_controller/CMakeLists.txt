@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.8)
-project(ros2_dual_stepper_controller)
+project(ros2_dual_stepper_controller LANGUAGES CXX)
 
-include(ros2_control_cmake)
 find_package(ament_cmake REQUIRED)
 find_package(backward_ros REQUIRED)
-find_package(controller_manager 4.0.0 REQUIRED)
+find_package(controller_manager REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
         hardware_interface
@@ -23,7 +22,7 @@ add_library(${PROJECT_NAME} SHARED
         src/serial_comm.cpp
 )
 
-target_compres($ile_featu{PROJECT_NAME} PUBLIC cxx_std_17)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>

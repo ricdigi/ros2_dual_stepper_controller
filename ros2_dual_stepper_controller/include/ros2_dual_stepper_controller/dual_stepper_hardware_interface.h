@@ -14,6 +14,7 @@
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include "rclcpp/clock.hpp"
 #include "rclcpp/duration.hpp"
+#include "rclcpp/logger.hpp"
 #include "rclcpp/macros.hpp"
 #include "rclcpp/time.hpp"
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
@@ -38,17 +39,30 @@ class DualStepperHardwareInterface : public hardware_interface::SystemInterface 
     */
     hardware_interface::CallbackReturn on_configure(const rclcpp_lifecycle::State & previous_state) override;
 
+    std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+    std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
+
     hardware_interface::return_type read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
     hardware_interface::return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
     void readEncoderData(const rclcpp::Duration & period);
     bool sendVelocityCommand();
 
+    // Get the logger of the SystemInterface.
+    rclcpp::Logger get_logger() const { return *logger_; }
+
+    // Get the clock of the SystemInterface.
+    rclcpp::Clock::SharedPtr get_clock() const { return clock_; }
+
   private:
     SerialComm serial_comm_;
 
     WheelJoint left_wheel_;
     WheelJoint right_wheel_;
+
+    // Objects for logging
+    std::shared_ptr<rclcpp::Logger> logger_;
+    rclcpp::Clock::SharedPtr clock_;
 
 };
 
