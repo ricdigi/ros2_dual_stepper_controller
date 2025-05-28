@@ -1,6 +1,6 @@
-<library path="ros2_daul_stepper_controller">
-    <class name="ros2_daul_stepper_controller/DualStepperHardwareInterface"
-           type="ros2_daul_stepper_controller::DualStepperHardwareInterface"
+<library path="ros2_dual_stepper_controller">
+    <class name="ros2_dual_stepper_controller/DualStepperHardwareInterface"
+           type="ros2_dual_stepper_controller::DualStepperHardwareInterface"
            base_class_type="hardware_interface::SystemInterface">
         <description>
             The ros2_control Dual Stepper HI uses a system hardware interface-type. It uses velocity command and position state interface.

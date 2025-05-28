@@ -1,4 +1,3 @@
-
 #include "ros2_dual_stepper_controller/dual_stepper_hardware_interface.hpp"
 #include "ros2_dual_stepper_controller/serial_comm.hpp"
 #include "ros2_dual_stepper_controller/wheel_joint.hpp"
@@ -115,12 +114,16 @@ hardware_interface::return_type DualStepperHardwareInterface::write(
 
 void DualStepperHardwareInterface::readEncoderData(const rclcpp::Duration & period) {
     uint8_t cmd;
+    float tmp;
     std::vector<uint8_t> data;
 
     if (serial_comm_.receive(cmd, data)) {
         if (cmd == SerialComm::ENC_CMD && data.size() == SerialComm::ENC_DATA_LEN) {
-           std::memcpy(&left_wheel_.position_rad, &data[0], 4);
-           std::memcpy(&right_wheel_.position_rad, &data[4], 4);
+            std::memcpy(&tmp, &data[0], 4);
+            left_wheel_.position_rad = static_cast<double>(tmp);
+
+            std::memcpy(&tmp, &data[4], 4);
+            right_wheel_.position_rad = static_cast<double>(tmp);
 
            left_wheel_.updateTotalPositionRad();
            right_wheel_.updateTotalPositionRad();
