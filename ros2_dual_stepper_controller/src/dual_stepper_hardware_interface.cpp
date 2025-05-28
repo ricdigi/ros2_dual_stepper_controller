@@ -37,11 +37,11 @@ hardware_interface::CallbackReturn DualStepperHardwareInterface::on_init(const h
     clock_ = std::make_shared<rclcpp::Clock>(rclcpp::Clock());
 
     if (info_.joints.size() != 2) {
-        RCLCPP_FATAL(logger_, "Expected exactly 2 joints, got %zu", info_.joints.size());
+        RCLCPP_FATAL(get_logger(), "Expected exactly 2 joints, got %zu", info_.joints.size());
         return hardware_interface::CallbackReturn::ERROR;
     }
 
-    RCLCPP_INFO(logger_, "Successfully initialized!");
+    RCLCPP_INFO(get_logger(), "Successfully initialized!");
     return hardware_interface::CallbackReturn::SUCCESS;
 
 }
@@ -61,7 +61,7 @@ hardware_interface::CallbackReturn DualStepperHardwareInterface::on_configure(co
     left_wheel_.name = info_.joints[0].name;
     right_wheel_.name = info_.joints[1].name;
 
-    RCLCPP_INFO(logger_, "Successfully configured!");
+    RCLCPP_INFO(get_logger(), "Successfully configured!");
     return hardware_interface::CallbackReturn::SUCCESS;
 
 }
@@ -105,7 +105,7 @@ hardware_interface::return_type DualStepperHardwareInterface::write(
     const rclcpp::Time & time, const rclcpp::Duration & period) {
 
     if (!sendVelocityCommand()) {
-        RCLCPP_ERROR(logger_, "Failed to send velocity command to the stepper motors.");
+        RCLCPP_ERROR(get_logger(), "Failed to send velocity command to the stepper motors.");
         return hardware_interface::return_type::ERROR;
     }
 
@@ -152,4 +152,4 @@ bool DualStepperHardwareInterface::sendVelocityCommand() {
 
 #include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(
-  dual_stepper_hardware_interface::dual_stepper_hardware_interface, hardware_interface::SystemInterface)
+  dual_stepper_hardware_interface::DualStepperHardwareInterface, hardware_interface::SystemInterface)
