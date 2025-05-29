@@ -157,8 +157,8 @@ bool DualStepperHardwareInterface::sendVelocityCommand() {
     std::vector<uint8_t> data(SerialComm::VEL_DATA_LEN);
     uint8_t cmd = SerialComm::VEL_CMD;
 
-    float left_speed = left_wheel_.commanded_velocity_rad_s;
-    float right_speed = right_wheel_.commanded_velocity_rad_s;
+    float left_speed = static_cast<float>(left_wheel_.commanded_velocity_rad_s);
+    float right_speed = static_cast<float>(right_wheel_.commanded_velocity_rad_s);
 
     memcpy(&data[0], &left_speed, sizeof(float));
     memcpy(&data[4], &right_speed, sizeof(float));
