@@ -14,10 +14,19 @@ TEST(SerialCommHardwareTest, ReadStreamingEncoderPackets) {
     comm.setBaudRate(115200);
     ASSERT_EQ(comm.init(), hardware_interface::CallbackReturn::SUCCESS);
 
+    // Wait for the serial sender (e.g. MCU) to boot and start transmitting
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+
     constexpr int expected_packet_count = 10;
     int received_count = 0;
 
-    for (int i = 0; i < 200 && received_count < expected_packet_count; ++i) {
+    using namespace std::chrono;
+    auto start_time = steady_clock::now();
+    const auto timeout = seconds(2);
+
+    while (received_count < expected_packet_count &&
+           steady_clock::now() - start_time < timeout) {
+
         uint8_t cmd;
         std::vector<uint8_t> data;
 
@@ -31,9 +40,9 @@ TEST(SerialCommHardwareTest, ReadStreamingEncoderPackets) {
                 received_count++;
             }
         } else {
-            std::this_thread::sleep_for(std::chrono::milliseconds(5));
+            std::this_thread::sleep_for(milliseconds(5));
         }
-    }
+           }
 
     EXPECT_GE(received_count, expected_packet_count);
 }
