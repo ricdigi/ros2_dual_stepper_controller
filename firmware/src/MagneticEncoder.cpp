@@ -17,6 +17,8 @@ void MagneticEncoder::encoderInit(uint8_t MUX_A_, uint8_t MUX_B_, uint8_t DIR_A,
   digitalWrite(DIR_A, LOW);
   digitalWrite(DIR_B, LOW);
 
+  delay(200);  // Wait for AS5600 to fully power up and stabilize
+
   // Calibrate the encoders in zero position at the start
   selectMuxChannel(1);
   delayMicroseconds(50);
