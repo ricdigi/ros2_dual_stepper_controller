@@ -51,8 +51,15 @@ install(DIRECTORY config/
 )
 
 
-
-
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
 ament_package()
+
+if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
+
+  ament_add_gtest(test_encoder_stream test/test_encoder_stream.cpp)
+  target_link_libraries(test_encoder_stream
+          ros2_dual_stepper_controller
+  )
+endif()
