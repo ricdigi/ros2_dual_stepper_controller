@@ -18,21 +18,22 @@ void MagneticEncoder::encoderInit(uint8_t MUX_A_, uint8_t MUX_B_, uint8_t DIR_A,
   digitalWrite(DIR_B, LOW);
 
   // Calibrate the encoders in zero position at the start
-  selectMuxChannel(2);
+  selectMuxChannel(1);
   delayMicroseconds(50);
   as5600.begin();  
   as5600.setDirection(AS5600_CLOCK_WISE);
   offset_A = as5600.rawAngle() * AS5600_RAW_TO_DEGREES;
-  Serial.println("First as5600 initialized");
 
-  selectMuxChannel(1);
+  selectMuxChannel(2);
   delayMicroseconds(50);
   offset_B = as5600.rawAngle() * AS5600_RAW_TO_DEGREES;
-  Serial.println("Second as5600 initialized");
 
   // Leave first channel selected
   selectMuxChannel(1);
   delayMicroseconds(50);
+
+  // Successfully initialized
+  Serial.println("Magnetic Encoder initialized successfully.");
 
 }
 
