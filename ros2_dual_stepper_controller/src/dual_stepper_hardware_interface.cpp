@@ -137,10 +137,10 @@ void DualStepperHardwareInterface::readEncoderData(const rclcpp::Duration & peri
                 left_wheel_.updateTotalPositionRad();
                 right_wheel_.updateTotalPositionRad();
 
-                left_wheel_.computeVelocityRadS(period.seconds());
-                right_wheel_.computeVelocityRadS(period.seconds());
+                left_wheel_.computeVelocityRadS(period.seconds(), get_logger());
+                right_wheel_.computeVelocityRadS(period.seconds(), get_logger());
 		
-		RCLCPP_INFO(get_logger(), "Updated encoder positions: L=%.3f R=%.3f", left_wheel_.position_rad, right_wheel_.position_rad);
+		//RCLCPP_INFO(get_logger(), "Updated encoder positions: L=%.3f R=%.3f", left_wheel_.position_rad, right_wheel_.position_rad);
 		tcflush(serial_comm_.getFD(), TCIFLUSH);
 
                 return;  // Successfully read one full packet, done

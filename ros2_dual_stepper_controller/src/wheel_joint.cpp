@@ -20,9 +20,13 @@ double WheelJoint::updateTotalPositionRad() {
 
 
 // Compute the angular velocity in rad/s
-void WheelJoint::computeVelocityRadS(double dt) {
+void WheelJoint::computeVelocityRadS(double dt, const rclcpp::Logger &logger) {
     double delta = total_position_rad - last_total_position_rad;
-    velocity_rad_s = delta / dt;
+    double new_velocity = delta / dt;
+    velocity_rad_s = new_velocity;  // or apply smoothing
+
+    RCLCPP_INFO(logger, "Δθ=%.4f rad, dt=%.4f s, ω=%.4f rad/s", delta, dt, velocity_rad_s);
+
     last_total_position_rad = total_position_rad;
 }
 

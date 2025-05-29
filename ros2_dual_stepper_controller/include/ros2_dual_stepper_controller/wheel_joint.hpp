@@ -3,6 +3,10 @@
 #define WHEEL_JOINT_HPP
 
 #include <string>
+#pragma once
+
+#include <rclcpp/rclcpp.hpp>
+#include <cmath>
 
 struct WheelJoint {
   std::string name;
@@ -18,7 +22,7 @@ struct WheelJoint {
   double velocity_rad_s = 0.0;             // current angular velocity in rad/s
 
   double updateTotalPositionRad();
-  void computeVelocityRadS(double dt);
+  void computeVelocityRadS(double dt, const rclcpp::Logger& logger);
 
 };
 
