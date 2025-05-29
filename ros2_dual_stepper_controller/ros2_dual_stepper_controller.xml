@@ -1,4 +1,4 @@
-<library path="dual_stepper_hardware_interface">
+<library path="ros2_dual_stepper_controller">
     <class name="dual_stepper_hardware_interface/DualStepperHardwareInterface"
            type="dual_stepper_hardware_interface::DualStepperHardwareInterface"
            base_class_type="hardware_interface::SystemInterface">
