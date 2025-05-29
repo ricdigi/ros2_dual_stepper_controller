@@ -26,13 +26,13 @@ hardware_interface::CallbackReturn SerialComm::init() {
 
     serial_fd_ = open(serial_port_.c_str(), O_RDWR | O_NOCTTY | O_SYNC);
     if (serial_fd_ < 0) {
-        RCLCPP_ERROR(get_logger(), "Failed to open serial port: " << strerror(errno));
+        RCLCPP_ERROR(get_logger(), "Failed to open serial port: %s", strerror(errno));
         return hardware_interface::CallbackReturn::ERROR;
     }
 
     struct termios tty {};
     if (tcgetattr(serial_fd_, &tty) != 0) {
-        RCLCPP_ERROR(get_logger(), "tcgetattr failed: " << strerror(errno));
+        RCLCPP_ERROR(get_logger(), "tcgetattr failed: %s", strerror(errno));
         return hardware_interface::CallbackReturn::ERROR;
     }
 
@@ -64,7 +64,7 @@ hardware_interface::CallbackReturn SerialComm::init() {
     tty.c_cflag &= ~CRTSCTS;
 
     if (tcsetattr(serial_fd_, TCSANOW, &tty) != 0) {
-        RCLCPP_ERROR(get_logger(), "tcsetattr failed: " << strerror(errno));
+        RCLCPP_ERROR(get_logger(), "tcsetattr failed: %s", strerror(errno));
         return hardware_interface::CallbackReturn::ERROR;
     }
 
