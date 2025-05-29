@@ -19,6 +19,8 @@ class SerialComm {
     void setSerialPort(const std::string & serial_port);
     void setBaudRate(int baud_rate);
 
+    int getFD() const { return serial_fd_; }
+
    /* Initialize the serial communication by opening the serial port and configuring it. It is necessary to first set
     * the attributes serial_port_ and baud_rate_ before calling this method.
     */

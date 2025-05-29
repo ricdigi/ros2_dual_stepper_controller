@@ -11,6 +11,7 @@
 #include <sstream>
 #include <vector>
 #include <cstring>
+#include <termios.h>
 
 #include "hardware_interface/lexical_casts.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
@@ -117,26 +118,38 @@ hardware_interface::return_type DualStepperHardwareInterface::write(
 
 
 void DualStepperHardwareInterface::readEncoderData(const rclcpp::Duration & period) {
+    const auto timeout_start = clock_->now();
+    const rclcpp::Duration timeout(0, 5e6);  // 5 milliseconds
+
     uint8_t cmd;
     float tmp;
     std::vector<uint8_t> data;
 
-    if (serial_comm_.receive(cmd, data)) {
-        if (cmd == SerialComm::ENC_CMD && data.size() == SerialComm::ENC_DATA_LEN) {
-            std::memcpy(&tmp, &data[0], 4);
-            left_wheel_.position_rad = static_cast<double>(tmp);
+    while ((clock_->now() - timeout_start) < timeout) {
+        if (serial_comm_.receive(cmd, data)) {
+            if (cmd == SerialComm::ENC_CMD && data.size() == SerialComm::ENC_DATA_LEN) {
+                std::memcpy(&tmp, &data[0], 4);
+                left_wheel_.position_rad = static_cast<double>(tmp);
 
-            std::memcpy(&tmp, &data[4], 4);
-            right_wheel_.position_rad = static_cast<double>(tmp);
+                std::memcpy(&tmp, &data[4], 4);
+                right_wheel_.position_rad = static_cast<double>(tmp);
 
-           left_wheel_.updateTotalPositionRad();
-           right_wheel_.updateTotalPositionRad();
+                left_wheel_.updateTotalPositionRad();
+                right_wheel_.updateTotalPositionRad();
 
-           left_wheel_.computeVelocityRadS(period.seconds());
-           right_wheel_.computeVelocityRadS(period.seconds());
+                left_wheel_.computeVelocityRadS(period.seconds());
+                right_wheel_.computeVelocityRadS(period.seconds());
+		
+		RCLCPP_INFO(get_logger(), "Updated encoder positions: L=%.3f R=%.3f", left_wheel_.position_rad, right_wheel_.position_rad);
+		tcflush(serial_comm_.getFD(), TCIFLUSH);
 
+                return;  // Successfully read one full packet, done
+		
+            }
         }
     }
+
+    RCLCPP_WARN_THROTTLE(get_logger(), *clock_, 2000, "No encoder packet received in last cycle.");
 }
 
 
