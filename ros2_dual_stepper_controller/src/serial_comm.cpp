@@ -10,7 +10,9 @@
 #include <cerrno>
 #include <cstring>
 
-SerialComm::SerialComm() {}
+SerialComm::SerialComm()
+: logger_(rclcpp::get_logger("SerialComm")) {}
+
 
 void SerialComm::setSerialPort(const std::string & serial_port) {
     serial_port_ = serial_port;
@@ -23,8 +25,6 @@ void SerialComm::setBaudRate(int baud_rate) {
 
 
 hardware_interface::CallbackReturn SerialComm::init() {
-
-    logger_ = rclcpp::get_logger("SerialComm");
 
     serial_fd_ = open(serial_port_.c_str(), O_RDWR | O_NOCTTY | O_SYNC);
     if (serial_fd_ < 0) {
