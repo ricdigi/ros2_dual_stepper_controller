@@ -14,6 +14,7 @@ class SerialComm {
 
   public:
     SerialComm();
+    ~SerialComm();
 
     void setSerialPort(const std::string & serial_port);
     void setBaudRate(int baud_rate);

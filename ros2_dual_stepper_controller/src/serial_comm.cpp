@@ -13,6 +13,12 @@
 SerialComm::SerialComm()
 : logger_(rclcpp::get_logger("SerialComm")) {}
 
+SerialComm::~SerialComm() {
+    if (serial_fd_ >= 0) {
+        close(serial_fd_);
+        serial_fd_ = -1;
+    }
+}
 
 void SerialComm::setSerialPort(const std::string & serial_port) {
     serial_port_ = serial_port;
