@@ -62,4 +62,10 @@ if(BUILD_TESTING)
   target_link_libraries(test_encoder_stream
           ros2_dual_stepper_controller
   )
+
+  ament_add_gtest(test_send_cmd test/test_send_cmd.cpp)
+  target_link_libraries(test_send_cmd
+          ros2_dual_stepper_controller
+  )
+
 endif()
