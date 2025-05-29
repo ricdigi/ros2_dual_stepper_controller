@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <chrono>
 #include <thread>
+#include <cstring>
 #include "ros2_dual_stepper_controller/serial_comm.hpp"
 
 TEST(SerialCommHardwareTest, ReadStreamingEncoderPackets) {
@@ -23,8 +24,8 @@ TEST(SerialCommHardwareTest, ReadStreamingEncoderPackets) {
         if (comm.receive(cmd, data)) {
             if (cmd == SerialComm::ENC_CMD && data.size() == SerialComm::ENC_DATA_LEN) {
                 float left, right;
-                std::memcpy(&left, &data[0], 4);
-                std::memcpy(&right, &data[4], 4);
+                memcpy(&left, &data[0], 4);
+                memcpy(&right, &data[4], 4);
 
                 std::cout << "Left: " << left << " rad, Right: " << right << " rad" << std::endl;
                 received_count++;

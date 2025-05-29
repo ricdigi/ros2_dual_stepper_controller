@@ -10,6 +10,7 @@
 #include <memory>
 #include <sstream>
 #include <vector>
+#include <cstring>
 
 #include "hardware_interface/lexical_casts.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
@@ -143,8 +144,8 @@ bool DualStepperHardwareInterface::sendVelocityCommand() {
     float left_speed = left_wheel_.commanded_velocity_rad_s;
     float right_speed = right_wheel_.commanded_velocity_rad_s;
 
-    std::memcpy(&data[0], &left_speed, sizeof(float));
-    std::memcpy(&data[4], &right_speed, sizeof(float));
+    memcpy(&data[0], &left_speed, sizeof(float));
+    memcpy(&data[4], &right_speed, sizeof(float));
 
     // Send the command via serial communication
     return serial_comm_.send(cmd, data);
