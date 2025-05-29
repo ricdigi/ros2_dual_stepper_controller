@@ -8,6 +8,7 @@
 #include <cerrno>
 #include <cstring>
 
+SerialComm::SerialComm() {}
 
 void SerialComm::setSerialPort(const std::string & serial_port) {
     serial_port_ = serial_port;
