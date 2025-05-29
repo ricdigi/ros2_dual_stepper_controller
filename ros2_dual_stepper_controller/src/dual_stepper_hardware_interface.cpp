@@ -45,8 +45,8 @@ hardware_interface::CallbackReturn DualStepperHardwareInterface::on_init(const h
     left_wheel_.name = info_.joints[0].name;
     right_wheel_.name = info_.joints[1].name;
 
-    RCLCPP_INFO(logger_, "Left joint name: '%s'", left_wheel_.name.c_str());
-    RCLCPP_INFO(logger_, "Right joint name: '%s'", right_wheel_.name.c_str());
+    RCLCPP_INFO(get_logger(), "Left joint name: '%s'", left_wheel_.name.c_str());
+    RCLCPP_INFO(get_logger(), "Right joint name: '%s'", right_wheel_.name.c_str());
 
     RCLCPP_INFO(get_logger(), "Successfully initialized!");
     return hardware_interface::CallbackReturn::SUCCESS;
