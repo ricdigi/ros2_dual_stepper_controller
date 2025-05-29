@@ -58,7 +58,7 @@ class SerialComm {
     std::vector<uint8_t> data_buf_;
 
     // Objects for logging
-    std::shared_ptr<rclcpp::Logger> logger_;
+    rclcpp::Logger logger_;
 
 };
 
