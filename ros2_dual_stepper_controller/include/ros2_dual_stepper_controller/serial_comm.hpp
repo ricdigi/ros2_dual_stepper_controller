@@ -28,12 +28,12 @@ class SerialComm {
     rclcpp::Logger get_logger() const { return *logger_; }
 
     // Variables relative to the communication protocol
-    static const uint8_t HEADER = 0xAA;
-    static const uint8_t VEL_CMD = 0x01;
-    static const uint8_t ENC_CMD = 0x02;
-    static const uint8_t VEL_DATA_LEN = 8;
-    static const uint8_t ENC_DATA_LEN = 8;
-    static constexpr size_t MAX_PACKET_SIZE = 16;
+    inline static constexpr uint8_t HEADER        = 0xAA;
+    inline static constexpr uint8_t VEL_CMD       = 0x01;
+    inline static constexpr uint8_t ENC_CMD       = 0x02;
+    inline static constexpr uint8_t VEL_DATA_LEN  = 8;
+    inline static constexpr uint8_t ENC_DATA_LEN  = 8;
+    inline static constexpr size_t  MAX_PACKET_SIZE = 16;
 
   private:
 
