@@ -2,6 +2,8 @@
 #include "ros2_dual_stepper_controller/serial_comm.hpp"
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 
+#include "rclcpp/logger.hpp"
+
 #include <fcntl.h>
 #include <termios.h>
 #include <unistd.h>

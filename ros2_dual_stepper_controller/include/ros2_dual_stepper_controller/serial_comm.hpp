@@ -4,6 +4,8 @@
 
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include "hardware_interface/system_interface.hpp"
+#include "rclcpp/logger.hpp"
+#include "rclcpp/logging.hpp"
 
 #include <string>
 #include <vector>
