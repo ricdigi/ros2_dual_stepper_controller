@@ -26,9 +26,6 @@ class SerialComm {
     bool receive(uint8_t &cmd, std::vector<uint8_t> &data);
     bool send(uint8_t cmd, const std::vector<uint8_t> &data);
 
-    // Get the logger of the SystemInterface.
-    rclcpp::Logger get_logger() const { return *logger_; }
-
     // Variables relative to the communication protocol
     inline static constexpr uint8_t HEADER        = 0xAA;
     inline static constexpr uint8_t VEL_CMD       = 0x01;

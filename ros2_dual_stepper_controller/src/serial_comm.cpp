@@ -71,7 +71,7 @@ hardware_interface::CallbackReturn SerialComm::init() {
     }
 
     state = WAIT_HEADER;
-    index = 0;
+    index_ = 0;
     data_buf_.reserve(MAX_PACKET_SIZE);
 
     return hardware_interface::CallbackReturn::SUCCESS;
