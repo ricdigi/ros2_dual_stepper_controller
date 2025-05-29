@@ -14,6 +14,9 @@ TEST(SerialCommHardwareTest, SendVelocityPacket) {
     comm.setBaudRate(115200);
     ASSERT_EQ(comm.init(), hardware_interface::CallbackReturn::SUCCESS);
 
+    // Wait for the serial sender (e.g. MCU) to boot and start transmitting
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+
     float left_speed = 1.0f;   // rad/s
     float right_speed = 1.0f;
 
