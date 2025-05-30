@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-    <xacro:macro name="wheel" params="name parent xyz rpy axis" >
+    <xacro:macro name="wheel" params="name parent xyz rpy axis mesh_filename" >
 
         <link name="${name}">
 
             <visual>
                 <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
                 <geometry>
-                    <mesh filename="package://ros2_dual_stepper_controller/description/meshes/urdf_wheel.STL"
+                    <mesh filename="package://ros2_dual_stepper_controller/description/meshes/${mesh_filename}"
                           scale="1 1 1"/>
                 </geometry>
                 <material name="grey"/>
