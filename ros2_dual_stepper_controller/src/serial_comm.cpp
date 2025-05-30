@@ -1,6 +1,8 @@
 
-#include "serial_comm.h"
+#include "ros2_dual_stepper_controller/serial_comm.hpp"
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
+
+#include "rclcpp/logger.hpp"
 
 #include <fcntl.h>
 #include <termios.h>
@@ -8,6 +10,15 @@
 #include <cerrno>
 #include <cstring>
 
+SerialComm::SerialComm()
+: logger_(rclcpp::get_logger("SerialComm")) {}
+
+SerialComm::~SerialComm() {
+    if (serial_fd_ >= 0) {
+        close(serial_fd_);
+        serial_fd_ = -1;
+    }
+}
 
 void SerialComm::setSerialPort(const std::string & serial_port) {
     serial_port_ = serial_port;
@@ -23,13 +34,13 @@ hardware_interface::CallbackReturn SerialComm::init() {
 
     serial_fd_ = open(serial_port_.c_str(), O_RDWR | O_NOCTTY | O_SYNC);
     if (serial_fd_ < 0) {
-        RCLCPP_ERROR_STREAM(rclcpp::get_logger("Hardware"), "Failed to open serial port: " << strerror(errno));
+        RCLCPP_ERROR(logger_, "Failed to open serial port: %s", strerror(errno));
         return hardware_interface::CallbackReturn::ERROR;
     }
 
     struct termios tty {};
     if (tcgetattr(serial_fd_, &tty) != 0) {
-        RCLCPP_ERROR_STREAM(rclcpp::get_logger("Hardware"), "tcgetattr failed: " << strerror(errno));
+        RCLCPP_ERROR(logger_, "tcgetattr failed: %s", strerror(errno));
         return hardware_interface::CallbackReturn::ERROR;
     }
 
@@ -41,7 +52,7 @@ hardware_interface::CallbackReturn SerialComm::init() {
     else if (baud_rate_ == 57600) baud = B57600;
     else if (baud_rate_ == 115200) baud = B115200;
     else {
-        RCLCPP_ERROR_STREAM(rclcpp::get_logger("Hardware"), "Unsupported baud rate");
+        RCLCPP_ERROR(logger_, "Unsupported baud rate");
         return hardware_interface::CallbackReturn::ERROR;
     }
 
@@ -61,12 +72,12 @@ hardware_interface::CallbackReturn SerialComm::init() {
     tty.c_cflag &= ~CRTSCTS;
 
     if (tcsetattr(serial_fd_, TCSANOW, &tty) != 0) {
-        RCLCPP_ERROR_STREAM(rclcpp::get_logger("Hardware"), "tcsetattr failed: " << strerror(errno));
+        RCLCPP_ERROR(logger_, "tcsetattr failed: %s", strerror(errno));
         return hardware_interface::CallbackReturn::ERROR;
     }
 
     state = WAIT_HEADER;
-    index = 0;
+    index_ = 0;
     data_buf_.reserve(MAX_PACKET_SIZE);
 
     return hardware_interface::CallbackReturn::SUCCESS;

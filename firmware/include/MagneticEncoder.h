@@ -11,10 +11,11 @@ class MagneticEncoder {
     MagneticEncoder();
 
     void encoderInit(uint8_t MUX_A, uint8_t MUX_B, uint8_t DIR_A, uint8_t DIR_B);
-    void readSensors();
+    bool readSensors();
 
     float getEncoderAData() { return enc_A_data; }
     float getEncoderBData() { return enc_B_data; }
+    float getEncoderUpdateFrequency() { return encoderUpdateFrequency; }
 
   private:
 
@@ -32,6 +33,9 @@ class MagneticEncoder {
     unsigned long muxSwitchTime = 0;
     uint8_t currentChannel = 1;
     bool waiting = false;
+
+    float encoderUpdateFrequency = 20.0;
+    float lastUpdateTime = 0.0;
 
     void selectMuxChannel(uint8_t channel);
 

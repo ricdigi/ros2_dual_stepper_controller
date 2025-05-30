@@ -36,7 +36,19 @@ class SerialComm {
     float   getSpeedA();            // Extract motor A speed
     float   getSpeedB();            // Extract motor B speed
 
-    void clearCommand();          
+    void clearCommand();
+
+    // Variables relative to the comunnication protocol
+    inline static const uint8_t HEADER = 0xAA;
+
+    inline static const uint8_t VEL_CMD = 0x01;
+    inline static const uint8_t ENC_CMD = 0x02;
+    inline static const uint8_t ENABLE_CMD = 0x03;
+    inline static const uint8_t DISABLE_CMD = 0x04;
+
+    inline static const uint8_t VEL_DATA_LEN = 8;
+    inline static const uint8_t ENC_DATA_LEN = 8;
+    inline static const uint8_t ENABLE_DATA_LEN = 1;
 
   private:
 
@@ -49,15 +61,6 @@ class SerialComm {
     };
 
     State state;
-
-    // Variables relative to the comunnication protocol
-    static const uint8_t HEADER = 0xAA;
-
-    static const uint8_t VEL_CMD = 0x01;
-    static const uint8_t ENC_CMD = 0x02;
-
-    static const uint8_t VEL_DATA_LEN = 8;
-    static const uint8_t ENC_DATA_LEN = 8;
 
     uint8_t cmd;
     uint8_t len;

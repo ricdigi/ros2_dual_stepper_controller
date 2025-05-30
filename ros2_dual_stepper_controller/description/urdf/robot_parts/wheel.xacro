@@ -1,30 +1,32 @@
 <?xml version="1.0"?>
-<xacro:macro name="wheel" params="name parent xyz rpy axis" >
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="wheel" params="name parent xyz rpy axis" >
 
-    <link name="${name}">
+        <link name="${name}">
 
-        <visual>
-            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-            <geometry>
-                <mesh filename="package://ros2_dual_stepper_controller/description/meshes/urdf_wheel.stl"
-                      scale="1 1 1"/>
-            </geometry>
-            <material name="grey"/>
-        </visual>
+            <visual>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="package://ros2_dual_stepper_controller/description/meshes/urdf_wheel.STL"
+                          scale="1 1 1"/>
+                </geometry>
+                <material name="grey"/>
+            </visual>
 
-        <!-- Inertial is formally required by ros2_control but not functionally necessary for this simple example-->
-        <inertial>
-            <mass value="0.1"/>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-        </inertial>
-    </link>
+            <!-- Inertial is formally required by ros2_control but not functionally necessary for this simple example-->
+            <inertial>
+                <mass value="0.1"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+            </inertial>
+        </link>
 
-    <joint name="${name}_joint" type="continuous">
-        <parent link="${parent}"/>
-        <child link="${name}"/>
-        <origin xyz="${xyz}" rpy="${rpy}"/>
-        <axis xyz="${axis}"/>
-    </joint>
+        <joint name="${name}_joint" type="continuous">
+            <parent link="${parent}"/>
+            <child link="${name}"/>
+            <origin xyz="${xyz}" rpy="${rpy}"/>
+            <axis xyz="${axis}"/>
+        </joint>
 
-</xacro:macro>
+    </xacro:macro>
+</robot>
