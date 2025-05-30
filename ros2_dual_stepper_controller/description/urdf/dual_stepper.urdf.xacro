@@ -23,7 +23,7 @@
             xyz="0.0 0.1156 0.046" rpy="0 0 0" axis="0 1 0" mesh_filename="urdf_left_wheel.STL"/>
 
     <xacro:wheel name="right_wheel" parent="base_link"
-            xyz="0.0 -0.1156 0.046" rpy="0 ${pi} 0" axis="0 1 0" mesh_filename="urdf_right_wheel.STL"/>
+            xyz="0.0 -0.1156 0.046" rpy="0 0 0" axis="0 1 0" mesh_filename="urdf_right_wheel.STL"/>
 
     <xacro:ros2_dual_stepper_controller name="DualStepperSystem" left="left_wheel" right="right_wheel"/>
 

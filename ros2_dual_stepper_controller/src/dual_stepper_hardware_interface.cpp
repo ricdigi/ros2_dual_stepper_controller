@@ -17,6 +17,7 @@
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
 
+#define M_PI 3.14159265358979323846
 
 namespace dual_stepper_hardware_interface
 {
@@ -129,10 +130,10 @@ void DualStepperHardwareInterface::readEncoderData(const rclcpp::Duration & peri
         if (serial_comm_.receive(cmd, data)) {
             if (cmd == SerialComm::ENC_CMD && data.size() == SerialComm::ENC_DATA_LEN) {
                 std::memcpy(&tmp, &data[0], 4);
-                left_wheel_.position_rad = static_cast<double>(tmp);
+                left_wheel_.position_rad = static_cast<double>(tmp) * (M_PI / 180.0);
 
                 std::memcpy(&tmp, &data[4], 4);
-                right_wheel_.position_rad = static_cast<double>(tmp);
+                right_wheel_.position_rad = static_cast<double>(tmp) * (M_PI / 180.0);
 
                 left_wheel_.updateTotalPositionRad();
                 right_wheel_.updateTotalPositionRad();
