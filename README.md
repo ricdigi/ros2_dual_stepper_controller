@@ -60,7 +60,7 @@ Begin by cloning this repository into the `src/` directory of your ROS 2 workspa
 
 ```bash
 cd ~/ros2_ws/src
-git clone https://github.com/ricdigi/ros2_dual_stepper_controller.git
+git clone -b humble https://github.com/ricdigi/ros2_dual_stepper_controller.git
 ```
 
 Next, ensure that all required system dependencies are installed. The plugin relies on core components of the ROS 2 control stack, including controller management and joint state broadcasting:
@@ -110,7 +110,7 @@ To bring up the dual stepper controller system, use the provided launch files. T
 Run the following command to start the system:
 
 ```bash
-ros2 launch dual_stepper_controller dual_stepper_controller.launch.py
+ros2 launch ros2_dual_stepper_controller test_hardware.launch.py
 ```
 
 Note: the system will run only if the ANET A8 board is connected via USB and the firmware is correctly installed and running (see the Firmware section below).
