@@ -121,7 +121,7 @@ The firmware is written in C++, and integrating some Arduino library syntax, for
 
 ### Requirements
 
-The firmware is designed to be compiled and uploaded using **PlatformIO**. To install PlatformIO, follow the instructions on the [official website](https://platformio.org/install/cli). A working Python installation is required.
+The firmware is designed to be compiled and uploaded using **PlatformIO**. To install PlatformIO, follow the instructions on the [official website](https://platformio.org/install/cli). A working Python installation is required. Moreover, make sure to install the shell commands.
 
 ### Uploading the Firmware
 
