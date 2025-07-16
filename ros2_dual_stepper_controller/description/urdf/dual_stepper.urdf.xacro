@@ -4,6 +4,7 @@
     <!-- Include all macro definitions -->
     <xacro:include filename="robot_parts/base_link.xacro"/>
     <xacro:include filename="robot_parts/wheel.xacro"/>
+    <xacro:include filename="robot_parts/lidar.xacro"/>
     <xacro:include filename="dual_stepper.ros2_control.xacro"/>
 
     <!-- Define reusable materials -->
