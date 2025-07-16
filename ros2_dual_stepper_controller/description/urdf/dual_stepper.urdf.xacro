@@ -25,7 +25,7 @@
     <xacro:wheel name="right_wheel" parent="base_link"
             xyz="0.0 -0.1175 0.0" rpy="0 0 0" axis="0 1 0" mesh_filename="urdf_right_wheel.STL"/>
 
-    <xacro:lidar_sensor name="lidar_link" parent="base_link"
+    <xacro:lidar_sensor name="lidar" parent="base_link"
                         xyz="0.29685 0 0.0845" rpy="0 0 0" mesh_filename="urdf_lidar_link.STL"/>
 
 
