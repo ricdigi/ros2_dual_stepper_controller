@@ -13,8 +13,8 @@ dual_stepper_base_controller:
     left_wheel_names: ["left_wheel_joint"]
     right_wheel_names: ["right_wheel_joint"]
 
-    wheel_separation: 0.2312
-    wheel_radius: 0.065
+    wheel_separation: 0.235
+    wheel_radius: 0.0475
 
     base_frame_id: base_link
 
