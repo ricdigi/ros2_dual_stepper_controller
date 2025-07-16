@@ -56,41 +56,16 @@ def generate_launch_description():
         arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
     )
 
-    # Diff drive controller (you named it dual_stepper_base_controller)
+    # Diff drive controller
     robot_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["dual_stepper_base_controller", "--controller-manager", "/controller_manager"],
-    )
-
-    # RViz launch (delayed after joint_state_broadcaster to avoid TF errors)
-    rviz_node = Node(
-        package="rviz2",
-        executable="rviz2",
-        name="rviz2",
-        output="log",
-        condition=IfCondition(gui),
-    )
-
-    delay_rviz = RegisterEventHandler(
-        OnProcessExit(
-            target_action=joint_state_broadcaster_spawner,
-            on_exit=[rviz_node]
-        )
-    )
-
-    # Optional: force robot_controller to launch before joint_state_broadcaster
-    delay_joint_state = RegisterEventHandler(
-        OnProcessExit(
-            target_action=robot_controller_spawner,
-            on_exit=[joint_state_broadcaster_spawner],
-        )
+        arguments=["diff_drive_controller", "--controller-manager", "/controller_manager"],
     )
 
     return LaunchDescription(declared_arguments + [
         robot_state_pub_node,
         control_node,
         robot_controller_spawner,
-        delay_joint_state,
-        delay_rviz,
+        joint_state_broadcaster_spawner,
     ])
