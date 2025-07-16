@@ -5,7 +5,7 @@
         <link name="base_link">
 
             <visual>
-                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0475 0.0"/>
                 <geometry>
                     <mesh filename="package://ros2_dual_stepper_controller/description/meshes/urdf_base_link.STL"
                           scale="1 1 1"/>

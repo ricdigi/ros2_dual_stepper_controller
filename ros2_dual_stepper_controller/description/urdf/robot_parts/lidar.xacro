@@ -10,7 +10,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://my_robot/meshes/${mesh_filename}" scale="1 1 1"/>
+                    <mesh filename="package://ros2_dual_stepper_controller/description/meshes/${mesh_filename}" scale="1 1 1"/>
                 </geometry>
                 <material name="grey"/>
             </visual>
