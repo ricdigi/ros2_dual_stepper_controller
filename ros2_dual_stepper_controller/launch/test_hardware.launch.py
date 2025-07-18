@@ -8,7 +8,6 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 
-
 def generate_launch_description():
     # Launch arguments
     declared_arguments = [
@@ -64,20 +63,9 @@ def generate_launch_description():
         arguments=["diff_drive_controller", "--controller-manager", "/controller_manager"],
     )
 
-    # Launch lidar node
-    lidar_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([
-                FindPackageShare("urg_node2"), "launch", "urg_node2.launch.py"
-            ])
-        ),
-        launch_arguments={}.items()
-    )
-
     return LaunchDescription(declared_arguments + [
         robot_state_pub_node,
         control_node,
         robot_controller_spawner,
-        joint_state_broadcaster_spawner,
-        lidar_launch
+        joint_state_broadcaster_spawner
     ])
