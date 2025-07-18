@@ -29,8 +29,8 @@ void setup() {
   comm.begin(115200);
   Wire.begin();
 
-  stepper_A.setRotationDir(true);
-  stepper_B.setRotationDir(false);
+  stepper_A.setRotationDir(false);
+  stepper_B.setRotationDir(true);
 
   stepper_A.setUpEnablePin();
   stepper_B.setUpEnablePin();
@@ -46,7 +46,7 @@ void setup() {
 }
 
 void loop() {
-  
+
   comm.receive();
 
   if (comm.hasCommand()) {

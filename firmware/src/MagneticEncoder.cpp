@@ -23,7 +23,7 @@ void MagneticEncoder::encoderInit(uint8_t MUX_A_, uint8_t MUX_B_, uint8_t DIR_A,
   selectMuxChannel(1);
   delayMicroseconds(50);
   as5600.begin();  
-  as5600.setDirection(AS5600_CLOCK_WISE);
+  as5600.setDirection(AS5600_COUNTERCLOCK_WISE);
   offset_A = as5600.rawAngle() * AS5600_RAW_TO_DEGREES;
 
   selectMuxChannel(2);
