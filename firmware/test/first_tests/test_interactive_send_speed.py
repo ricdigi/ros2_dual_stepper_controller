@@ -2,7 +2,7 @@ import serial
 import struct
 import time
 
-PORT = '/dev/cu.usbserial-2140'
+PORT = '/dev/cu.usbserial-1230'
 BAUD = 115200
 
 def build_packet(speed_a, speed_b):

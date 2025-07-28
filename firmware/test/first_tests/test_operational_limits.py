@@ -5,7 +5,7 @@ import numpy as np
 import csv
 import matplotlib.pyplot as plt
 
-PORT = '/dev/cu.usbserial-2140'
+PORT = '/dev/cu.usbserial-1230'
 BAUD = 115200
 HEADER = 0xAA
 VEL_CMD = 0x01

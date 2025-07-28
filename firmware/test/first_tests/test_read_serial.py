@@ -56,7 +56,7 @@ def read_packet(ser):
                 state = WAIT_HEADER
 
 def main():
-    port = '/dev/cu.usbserial-21240'  # adjust as needed
+    port = '/dev/cu.usbserial-1230'  # adjust as needed
     baud = 115200
 
     try:
