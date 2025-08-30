@@ -17,8 +17,14 @@ public:
   void setSpeedRad(float radPerSec);
   void setAccelerationRad(float radPerSec2);
 
+  void setRotationDir(bool spinDir_) {spinDir = spinDir_; stepper.setPinsInverted(spinDir, false, false);}
+
 private:
   AccelStepper stepper;
+
+  // Set stepper direction CW or CCW as viewd fromm the motor shaft
+  // CW -> spinDir= true, CCW -> spinDir = false
+  bool spinDir = false;
 
   // Motor Pins
   const uint8_t stepPin;

@@ -71,6 +71,10 @@ void SerialComm::sendEncoderData(float enc_a_data, float enc_b_data) {
   memcpy(payload, &enc_a_data, 4);
   memcpy(payload + 4, &enc_b_data, 4);
 
+  if (Serial.availableForWrite() < 15) {
+    return;
+  }
+
   Serial.write(HEADER);
   Serial.write(ENC_CMD);
   Serial.write(ENC_DATA_LEN);
@@ -85,6 +89,10 @@ void SerialComm::sendEncoderData(float enc_a_data, float enc_b_data) {
 
 bool SerialComm::hasCommand() {
   return commandReady;
+}
+
+uint8_t SerialComm::getCommand() {
+  return cmd;
 }
 
 float SerialComm::getSpeedA() {
